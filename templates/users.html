@@ -1,0 +1,66 @@
+{% extends "plantilla.html" %}
+
+{% block title %}
+Leave your message
+{% endblock %}
+
+{% block content %} 
+
+{% if modelo.exito %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ modelo.exito }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% if modelo.error %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ modelo.error }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col">
+        <table class="table table-primary table-striped ">
+            <thead>
+                <tr>
+                    <th colspan="4" style="text-align: center;">Aqui puedes ver tu mensaje y codigo</th>
+                </tr>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Mensaje</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in modelo.users %}
+                <tr>
+                    <td>{{ user.0 }}</td>
+                    <td>{{ user.1 }}</td>
+                    <td>{{ user.2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col bg-primary text-white" style="padding: 10px;">
+        <h3>Send your message</h3>
+        <form action="/users/new" method="post">
+            <div class="mb-3">
+                <label for="InputName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="InputName" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="InputMenssage" class="form-label">Message</label>
+                <input type="text" class="form-control" id="InputMessage" name="message"  rows="3">
+            </div>
+            
+            <div style="text-align: end;">
+                <button type="submit" class="btn btn-success">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
