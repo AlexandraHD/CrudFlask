@@ -36,7 +36,7 @@ Leave your message
             <tbody>
                 {% for user in modelo.users %}
                 <tr>
-                    <td>{{ user.0 }}</td>
+                    <td><a href="/users/edit/{{user.0}}">{{ user.0 }}</a></td>
                     <td>{{ user.1 }}</td>
                     <td>{{ user.2 }}</td>
                 </tr>
