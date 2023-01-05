@@ -97,7 +97,7 @@ def update():
         sql = f"""
                 UPDATE users
                 SET name = '{name}',
-                    message = '{message}',
+                    message = '{message}'
                 WHERE id_user = '{id_user}'
             """
         cursor = mysql.connection.cursor()
@@ -145,5 +145,63 @@ def delete(id_user: str):
 @app.route("/match")
 def match ():
     return render_template("match.html")
+
+@app.route("/match/search", methods=["POST"])
+def match_search():
+    id_user = None
+    datos = dict()
+    if id_user is None:
+        id_user = request.form["id_user"]
+
+    try:
+        # Consultar datos del usuario
+        sql = f"""
+            SELECT id_user, name
+            FROM users
+            WHERE id_user = '{id_user}'
+            """
+        cursor = mysql.connection.cursor()
+        cursor.execute(sql)
+        # Cargar la informacion del estudiante en la plantilla
+        datos["users"] = cursor.fetchall()
+        cursor.close()
+        
+        # # Consultar todas las mascotas del sistema
+        # sql = f"""
+        #     SELECT type
+        #     FROM pets
+        #     """
+        # cursor = mysql.connection.cursor()
+        # cursor.execute(sql)
+        # # Cargar la informacion de las mascotas
+        # datos["pets"] = cursor.fetchall()
+        # cursor.close()
+    
+    except:
+        datos["error"] = "No se pudo cargar la informacion del usuario"
+    
+    return render_template("match.html", modelo = datos)
+
+# @app.route("/match/choose")
+# def pets ():
+#     datos = dict()
+#     try:
+#         # Consultar todas las mascotas del sistema
+#         sql = f"""
+#             SELECT type
+#             FROM pets
+#             ORDER BY type
+#             """
+#         cursor = mysql.connection.cursor()
+#         cursor.execute(sql)
+#         # Cargar la informacion del estudiante en la plantilla
+#         datos["pets"] = cursor.fetchall()
+#         cursor.close()
+
+#     except:
+#         datos["error"] = "No se pudo cargar la informacion de las mascotas"
+
+#     # Enviar la informacion al formulario
+#     return render_template("match.html", modelo = datos)
 
 app.run()

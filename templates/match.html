@@ -3,3 +3,34 @@
 {% block title %}
 Match
 {% endblock %}
+
+{% block content %}
+
+<form method="post" action="/match" class="row">
+    <div>
+        <label for="search" class="form-label col-1">Code</label>
+        <input id="search" type="text" class="form-control col" name="id_user">
+    </div>
+    <!-- <div>
+        <label class="form-label col-1">Pet</label>
+        <select class="select form-control col" name="pets">
+            {% for pet in modelo.pets %}
+            <option value="{{pet.0}}">{{pet.1}}</option>
+            {% endfor %}
+        </select>
+    </div> -->
+    <button type="submit" class="btn btn-primary col-1">Match</button>
+</form>
+
+<!-- {% if modelo and modelo.users %}
+<div class="card mt-5">
+    <div class="card-body">
+        <h5 class="card-title">{{modelo.users.1}}</h5>
+        <p class="card-text">
+            <b>Code</b>{{modelo.users.0}}<br>
+        </p>
+    </div>
+</div>
+{% endif %} -->
+
+{% endblock %}
